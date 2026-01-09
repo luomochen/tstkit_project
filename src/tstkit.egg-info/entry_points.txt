@@ -1,0 +1,2 @@
+[console_scripts]
+tstkit = tstkit.main:main

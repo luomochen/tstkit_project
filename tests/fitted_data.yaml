@@ -1,0 +1,7 @@
+fit_equation:
+  slope: -3.30259
+  intercept: -6.02239
+  equation: y = -3.30259x + -6.02239
+r_squared: 1.0
+diffusion_barrier_eV: 0.6553
+prefactor_D0_m2_per_s: 9.4975e-07
