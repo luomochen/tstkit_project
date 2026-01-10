@@ -102,13 +102,13 @@ def calculate_total_diffusion_coefficient(t, d_matrix) -> dict:
 #    )
 
     # Normality test
-    stat, p_value = normaltest(D_list)
-    return {
-        "D_std": D_std,
-        "D_se": D_se,
-        "CI_95": CI_95,
-        "normaltest_p": p_value
-    }
+#    stat, p_value = normaltest(D_list)
+#    return {
+#        "D_std": D_std,
+#        "D_se": D_se,
+#        "CI_95": CI_95,
+#        "normaltest_p": p_value
+#    }
 
 #def project_displacement(displacements, crystal_orientation, vasp_file):
 #    """Calculates the projection of displacements onto a crystal orientation.
@@ -141,7 +141,31 @@ def fit_diffusion_data(x, y):
     R2 = r_squared(y, linear_func(x, *popt))
     return slope, intercept, barrier, D0, R2
 
-def plot_fit(x, y, slope, intercept, barrier, R2, output_file):
+def plot_fit(x, y, slope, intercept, barrier, R2, output_file) -> None:
+    """
+    Plots the linear fit of diffusion data.
+    
+    Parameters
+    ----------
+    x : np.ndarray
+        x data (1000/T)
+    y : np.ndarray
+        y data (log10(D))
+    slope : float
+        Slope of the fitted line.
+    intercept : float
+        Intercept of the fitted line.
+    barrier : float
+        Diffusion barrier in eV.
+    R2 : float
+        R-squared value of the fit.
+    output_file : str
+        Path to save the plot.
+    
+    Returns
+    -------
+    None
+    """
     x_fit = np.linspace(min(x) - 0.1, max(x) + 0.1, 500)
     y_fit = linear_func(x_fit, slope, intercept)
 
@@ -151,13 +175,35 @@ def plot_fit(x, y, slope, intercept, barrier, R2, output_file):
     ax.set_xlabel(r"1000/T (K$^{-1}$)", fontsize=20)
     ax.set_ylabel("log10(D)", fontsize=20)
     ax.set_title(f"Barrier = {barrier:.3f} eV", fontsize=20)
-    ax.text(x_fit.mean(), y_fit.mean(), f"$R^2$ = {R2:.3f}", fontsize=18, color='blue')
+    ax.text(x_fit.mean(), y_fit.mean(), fr"$\mathrm{{R^2}} = {R2:.3f}$", fontsize=18, color='blue')
     ax.grid(True)
     ax.legend()
     fig.savefig(output_file)
     plt.close(fig)
 
-def plot_D_vs_T(temperatures, D_log10, slope=None, intercept=None, R2=None, output_file="D_vs_T.png"):
+def plot_D_vs_T(temperatures, D_log10, slope=None, intercept=None, R2=None, output_file="D_vs_T.png") -> None:
+    """
+    Plots log10(D) vs 1000/T with optional linear fit.
+    
+    Parameters
+    ----------
+    temperatures : np.ndarray
+        Array of 1000/T values.
+    D_log10 : np.ndarray
+        Array of log10(D) values.
+    slope : float, optional
+        Slope of the fitted line.
+    intercept : float, optional
+        Intercept of the fitted line.
+    R2 : float, optional
+        R-squared value of the fit.
+    output_file : str
+        Path to save the plot.
+    
+    Returns
+    -------
+    None
+    """
     fig, ax = plt.subplots(figsize=(10, 8), dpi=150)
     ax.scatter(temperatures, D_log10, edgecolors='black', facecolors='cyan', s=100, label='Data')
     if slope is not None and intercept is not None:

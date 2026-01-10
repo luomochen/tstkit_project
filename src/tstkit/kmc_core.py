@@ -1,10 +1,10 @@
-import yaml
 import numpy as np
 import pandas as pd
 from numba import njit
 import multiprocessing as mp
 from .rates import RatesTable
-from .events import count_time, pad_ragged_2d, Events
+from .events import Events
+from .utils import count_time, pad_ragged_2d
 
 @njit
 def kmc_one_step(ini, rates, total_rate, targets, n_events):
