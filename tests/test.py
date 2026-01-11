@@ -5,12 +5,12 @@ import multiprocessing as mp
 import unittest
 from tstkit.rates import RatesTable
 from tstkit.config import load_config
-from tstkit.events import Events, pad_ragged_2d
+from tstkit.events import Events
 from tstkit.kmc_core import kmc_iteration, run_kmc_at_temperature
 from tstkit.process import postprocess_diffusion
 cfg = load_config("input.yaml")
 ev = Events(structure_file="sites.vasp", path=cfg.site_geometry)
-postprocess_diffusion(cfg, fit=True)
+#postprocess_diffusion(cfg, fit=True)
 print(ev.n_sites)
 print(ev.site_symbols)
 print(ev.site_symbol_ranges)
